@@ -43,10 +43,14 @@ class CookieHandlerModule(reactContext: ReactApplicationContext) :
     val domain = java.net.URI(url).host
 
     cookies?.split(";")?.forEach {
-      val cookie = HttpCookie.parse(it.trim())[0]
-      val cookieString =
-          "${cookie.name}=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Domain=$domain; Path=${cookie.path}"
-      cookieHandler.setCookie(url, cookieString)
+      try {
+        val cookie = HttpCookie.parse(it.trim())[0]
+        val cookieString =
+            "${cookie.name}=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Domain=$domain; Path=${cookie.path}"
+        cookieHandler.setCookie(url, cookieString)
+      } catch (e: IllegalArgumentException) {
+        e.printStackTrace()
+      }
     }
 
     cookieHandler.flush()
@@ -66,11 +70,15 @@ class CookieHandlerModule(reactContext: ReactApplicationContext) :
     val domain = java.net.URI(url).host
 
     cookies?.split(";")?.forEach {
-      val cookie = HttpCookie.parse(it.trim())[0]
-      if (cookieNamesList.contains(cookie.name)) {
-        val cookieString =
-            "${cookie.name}=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Domain=$domain; Path=${cookie.path}"
-        cookieHandler.setCookie(url, cookieString)
+      try {
+        val cookie = HttpCookie.parse(it.trim())[0]
+        if (cookieNamesList.contains(cookie.name)) {
+          val cookieString =
+              "${cookie.name}=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Domain=$domain; Path=${cookie.path}"
+          cookieHandler.setCookie(url, cookieString)
+        }
+      } catch (e: IllegalArgumentException) {
+        e.printStackTrace()
       }
     }
 

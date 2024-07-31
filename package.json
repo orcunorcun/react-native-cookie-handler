@@ -1,6 +1,6 @@
 {
   "name": "react-native-cookie-handler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A React Native library for managing cookies on both iOS and Android platforms, including HTTP only cookies.",
   "main": "lib/commonjs/index",
   "module": "lib/module/index",
